@@ -1,0 +1,11 @@
+# .flake8 is the default name for the flake8 config file 
+# creating this avoid linting on pre-made templated code like from django
+# doing this in app because that's where all of our django app files will live
+    # can be refenced by the volume ./app:/app
+
+[flake8]
+exclude =
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py

@@ -1,0 +1,21 @@
+# version control for docker compose in case new versions are released
+version: "3.9"
+
+services:
+  # name the service app
+  app:
+    build:
+      # builds service into current directory
+      context: .
+      # establishes that this is being used for dev? i think is an argument we can pass in when spinning up the container that specifies it's being used for dev
+      args:
+        - DEV=true
+    ports:
+      # networking maps port 8000 in container to 8000 in localhost
+      - "8000:8000"
+    volumes:
+      # syncs ./app folder in container to /app folder in localhost
+      - ./app:/app
+    # default command when starting up container - in this case it spins up the django server
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"

@@ -1,0 +1,21 @@
+# . in front of a file or directory means it's inherently hidden
+# exclude files docker doesn't want to deal with
+# can copy and paste this, this is a standard similar to python gitignore i imagine
+
+# git
+.git
+.gitignore
+
+# docker
+.docker
+
+# python
+# cached python that might be native to current os from going into container
+app/__pycache__/
+app/*/__pycache__/
+app/*/*/__pycache__/
+app/*/*/*/__pycache__/
+# exclude local virtual environments
+.env/
+.venv/
+venv/

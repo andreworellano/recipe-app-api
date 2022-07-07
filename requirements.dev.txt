@@ -1,0 +1,5 @@
+# this is dev because it's only meant to be used in a dev environment
+# shouldn't need linting once you deploy out to prod
+# seperate dev and prod dependencies
+
+flake8>=3.9.2,<3.10
