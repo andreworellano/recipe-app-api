@@ -22,7 +22,14 @@ ARG DEV=false
 RUN python -m venv /py && \
     # upgrades pip in venv
     /py/bin/pip install --upgrade pip && \
+    # these are the dependencies needed on the alpine container in order to install postgres
+    apk add --update --no-cache postgresql-client && \
+    # creates a temp directory for installing dependencies i think 
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        # these are the temp dependencies needed to install psycop
+        build-base postgresql-dev musl-dev && \
     # installs requirements inside docker image --> venv
+    # per notes above psycop will be in this requirements, we added dependencies prior
     /py/bin/pip install -r /tmp/requirements.txt && \
     # an if statement that looks for true and then installs dev requirements (flake8 linting)
     if [ $DEV = "true" ]; \
@@ -32,6 +39,8 @@ RUN python -m venv /py && \
     fi && \
     # executes a rm of the /tmp directory where we temporarily stored the requirements txt copied from localhost
     rm -rf /tmp && \
+    # remove tmp build to keep container light weight
+    apk del .tmp-build-deps && \
     # creates a user within the alpine container **avoid using container as root user**
     # helps against hackers gaining root access
     adduser \

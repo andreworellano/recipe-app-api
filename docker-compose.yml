@@ -19,3 +19,27 @@ services:
     # default command when starting up container - in this case it spins up the django server
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      # through docker compose you can use the name of the service [db] as the hose name
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      # db needs to start before app
+      - db
+  
+  db:
+    image: postgres:13-alpine
+    volumes:
+      # localhost / docker volume data storage we're mapping that to folder location in container to keep persistent data
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+
+volumes:
+  # default location where docker stores volume data [do more research on docker lol]
+  dev-db-data:
