@@ -18,7 +18,9 @@ services:
       - ./app:/app
     # default command when starting up container - in this case it spins up the django server
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py wait_for_db && 
+             python manage.py makemigrations &&
+             python manage.py runserver 0.0.0.0:8000"
     environment:
       # through docker compose you can use the name of the service [db] as the hose name
       - DB_HOST=db
