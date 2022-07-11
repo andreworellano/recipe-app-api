@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     # added the 'core' app under app
     'core',
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_spectacular',
+    'user',
 ]
 
 MIDDLEWARE = [
